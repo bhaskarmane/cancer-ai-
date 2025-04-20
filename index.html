@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Skin Cancer Detector | VRJBro Model</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>AI Skin Cancer Detector | Anwarkh1 Model</title> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
-        /* CSS Styles (Includes previous styles + footer style) */
+        /* CSS Styles (Same as previous version) */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
         :root {
           --bg-gradient-start: #0f172a; --bg-gradient-end: #1e293b; --glass-bg: rgba(255, 255, 255, 0.05);
@@ -28,7 +27,7 @@
         .app h1 { font-size: 1.9em; font-weight: 600; margin-bottom: 25px; background: linear-gradient(45deg, var(--accent-gradient-start), var(--accent-gradient-end)); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; display: inline-block; }
         .app h1 i { margin-right: 10px; font-size: 0.9em; -webkit-text-fill-color: initial; }
         .upload-section { margin-bottom: 30px; }
-        .upload-instructions { font-size: 0.95em; color: var(--text-secondary); margin-bottom: 20px; line-height: 1.5; /* Added for better spacing */ }
+        .upload-instructions { font-size: 0.95em; color: var(--text-secondary); margin-bottom: 20px; line-height: 1.5; }
         .upload-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; }
         .upload-box { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--border-radius-md); padding: 25px 20px; transition: all 0.3s ease-in-out; cursor: pointer; text-align: center; overflow: hidden; position: relative; min-height: 150px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
         .upload-box:not(.uploaded):hover { transform: translateY(-5px); border-color: var(--accent-hover); background: rgba(34, 211, 238, 0.08); }
@@ -108,7 +107,6 @@
                 <div class="result-item"><span class="result-label"><i class="fa-solid fa-stethoscope"></i> Result:</span><span class="result-value" id="resultValue"></span></div>
                 <div class="result-item"><span class="result-label"><i class="fa-solid fa-percent"></i> Confidence:</span><span class="result-value" id="confidenceValue"></span></div>
                 <div class="result-item"><span class="result-label"><i class="fa-solid fa-triangle-exclamation"></i> Risk Level:</span><span class="result-value" id="riskLevel"></span></div>
-                <div class="result-item"><span class="result-label"><i class="fa-solid fa-brain"></i> AI Certainty:</span><span class="result-value" id="aiCertainty"></span></div>
                 <div class="result-item"><span class="result-label"><i class="fa-regular fa-clock"></i> Analyzed at:</span><span class="result-value" id="analysisTime"></span></div>
                 <div class="advice-section"><p><strong><i class="fa-solid fa-circle-info"></i> Important Advice:</strong></p><p id="adviceText"></p></div>
             </div>
@@ -118,9 +116,16 @@
     </div>
 
     <script>
-        // API CONFIGURATION
-        const API_ENDPOINT_URL = "https://api-inference.huggingface.co/models/VRJBro/skin-cancer-detection";
-        const API_KEY = "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"; // Replace with your actual key if different, but keep it secret!
+        // --------------------------------------------------
+        // !! API CONFIGURATION - PASTE VALUES HERE !!
+        // --------------------------------------------------
+        // ** STEP 1: URL for the Anwarkh1/Skin_Cancer-Image_Classification model **
+        const API_ENDPOINT_URL = "https://api-inference.huggingface.co/models/Anwarkh1/Skin_Cancer-Image_Classification"; // <-- UPDATED URL
+
+        // ** STEP 2: Replace placeholder with YOUR Hugging Face API Key ** (Keep Secret!)
+        const API_KEY = "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"; // <-- PASTE YOUR hf_... TOKEN HERE
+        // --------------------------------------------------
+
 
         // Elements
         const analyzeBtn = document.getElementById('analyzeBtn');
@@ -130,7 +135,7 @@
         const resultValueEl = document.getElementById('resultValue');
         const confidenceValueEl = document.getElementById('confidenceValue');
         const riskLevelEl = document.getElementById('riskLevel');
-        const aiCertaintyEl = document.getElementById('aiCertainty');
+        // AI Certainty element removed
         const analysisTimeEl = document.getElementById('analysisTime');
         const adviceTextEl = document.getElementById('adviceText');
 
@@ -150,6 +155,7 @@
           const file1Input = document.getElementById('image1');
           const uploadBox1 = document.getElementById('uploadBox1');
 
+          // Using only the first image for standard HF image classification API
           if (!uploadBox1.classList.contains('uploaded')) {
              alert("Please upload at least the first image before analyzing."); return;
           }
@@ -158,8 +164,9 @@
           resultBox.classList.remove('show'); clearResultFields();
           analyzeBtn.disabled = true; btnText.classList.add('hide'); spinner.style.display = 'block';
 
-          // Check if API details are placeholders (Original placeholders check)
-          if (API_ENDPOINT_URL === "YOUR_BACKEND_OR_AI_SERVICE_API_ENDPOINT_HERE" || API_KEY === "YOUR_API_KEY_HERE") {
+          // Check if API details are placeholders (Corrected Check)
+          // IMPORTANT: Ensure you replace "YOUR_API_KEY_HERE" below if you change the placeholder text above
+          if (API_ENDPOINT_URL === "YOUR_BACKEND_OR_AI_SERVICE_API_ENDPOINT_HERE" || API_KEY === "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") {
                 setTimeout(() => {
                      alert("Analysis Error: API details are not configured correctly in the script.\nPlease update API_ENDPOINT_URL and API_KEY constants.");
                      console.error("API_ENDPOINT_URL or API_KEY still has placeholder value.");
@@ -175,7 +182,7 @@
           console.log("Attempting API call to:", API_ENDPOINT_URL);
 
           fetch(API_ENDPOINT_URL, { method: 'POST', headers: requestHeaders, body: requestBody })
-          .then(response => { /* ... Error handling ... */
+          .then(response => { // Handle potential errors
                 if (!response.ok) {
                      return response.json().catch(() => response.text()).then(errBody => {
                          let errorMsg = `API Error (${response.status}): `;
@@ -185,37 +192,74 @@
                          throw new Error(errorMsg);
                      });
                  }
-                 return response.json();
+                 return response.json(); // Parse success response
           })
-          .then(data => { /* ... Result processing ... */
+          .then(data => { // Process successful response
                 console.log("API Response Received:", data); // <<< CHECK BROWSER CONSOLE FOR THIS >>>
+
+                 // --- Process API Response --- !!! IMPORTANT: ADAPT THIS SECTION !!! ---
+                 // This logic needs to match the ACTUAL labels returned by Anwarkh1/Skin_Cancer-Image_Classification
+                 // Check the model card and console output to confirm labels like 'melanoma', 'nevus', 'bcc', 'akiec' etc.
+
                  if (Array.isArray(data) && data.length > 0) {
-                     const topResult = data[0]; const label = topResult.label || 'N/A'; const score = topResult.score || 0;
-                     let riskLevel = "Info"; let riskClass = "risk-unknown"; let certainty = "Check Confidence";
-                     let advice = "Consult a certified dermatologist for guidance regarding the AI analysis.";
+                     const topResult = data[0];
+                     const label = topResult.label || 'N/A';
+                     const score = topResult.score || 0;
+
+                     let riskLevel = "Info"; let riskClass = "risk-unknown";
+                     let advice = "Please consult a certified dermatologist for a professional diagnosis based on this AI analysis.";
+
                      const lowerLabel = label.toLowerCase();
-                     // Example Mapping Logic (NEEDS VERIFICATION/ADAPTATION for VRJBro model)
-                     if (lowerLabel.includes('melanoma') || lowerLabel.includes('malignant')) { riskLevel = "HIGH"; riskClass = "risk-high"; certainty = "High Confidence Indicated"; advice = "Analysis indicates features highly suspicious of malignancy. <strong>Immediate consultation with a dermatologist is strongly recommended.</strong>"; }
-                     else if (lowerLabel.includes('basal cell carcinoma') || lowerLabel.includes('bcc')) { riskLevel = "MEDIUM"; riskClass = "risk-medium"; certainty = "Moderate Confidence Indicated"; advice = "Features suggestive of Basal Cell Carcinoma detected. Consultation with a dermatologist is necessary for confirmation."; }
-                     else if (lowerLabel.includes('squamous cell carcinoma') || lowerLabel.includes('scc')) { riskLevel = "MEDIUM"; riskClass = "risk-medium"; certainty = "Moderate Confidence Indicated"; advice = "Features suggestive of Squamous Cell Carcinoma detected. Consultation with a dermatologist is necessary."; }
-                     else if (lowerLabel.includes('actinic keratosis') || lowerLabel.includes('akiec')) { riskLevel = "LOW"; riskClass = "risk-low"; certainty = "Low Confidence Indicated"; advice = "Features may represent Actinic Keratosis (pre-cancerous). Seeing a dermatologist for evaluation is recommended."; }
-                     else if (lowerLabel.includes('benign keratosis') || lowerLabel.includes('bkl')) { riskLevel = "LOW"; riskClass = "risk-low"; certainty = "Low Confidence Indicated"; advice = "Analysis suggests a non-cancerous Benign Keratosis-like lesion. Consult a dermatologist if concerned or if changes occur."; }
-                     else if (lowerLabel.includes('dermatofibroma') || lowerLabel.includes('df')) { riskLevel = "LOW"; riskClass = "risk-low"; certainty = "Low Confidence Indicated"; advice = "Features consistent with a benign Dermatofibroma. Consult a dermatologist if concerned."; }
-                     else if (lowerLabel.includes('nevus') || lowerLabel.includes('nv') || lowerLabel.includes('mole')) { riskLevel = "LOW"; riskClass = "risk-low"; certainty = "Low Confidence Indicated"; advice = "Likely a common mole (Nevus). Monitor using the ABCDE rule and consult a dermatologist for any changes or concerns."; }
-                     else if (lowerLabel.includes('vascular lesion') || lowerLabel.includes('vasc')) { riskLevel = "LOW"; riskClass = "risk-low"; certainty = "Low Confidence Indicated"; advice = "Features suggest a benign Vascular Lesion. Consult a dermatologist if concerned."; }
-                     // Update UI
-                     resultValueEl.textContent = label; confidenceValueEl.textContent = `${(score * 100).toFixed(2)}%`;
-                     riskLevelEl.textContent = riskLevel; riskLevelEl.className = `result-value ${riskClass}`;
-                     aiCertaintyEl.textContent = certainty; analysisTimeEl.innerText = new Date().toLocaleTimeString();
-                     adviceTextEl.innerHTML = advice;
-                     resultBox.classList.add('show');
-                 } else { throw new Error("Received unexpected or empty data format from API."); }
-                 finalizeAnalysisUI();
+
+                     // --- !!! REVIEW AND EDIT THIS MAPPING LOGIC !!! ---
+                     if (lowerLabel.includes('melanoma') || lowerLabel.includes('malignant')) {
+                         riskLevel = "HIGH"; riskClass = "risk-high";
+                         advice = "The analysis suggests this could be a **serious skin cancer (like Melanoma)**. Please see a dermatologist **immediately** for an examination.";
+                     } else if (lowerLabel.includes('basal cell carcinoma') || lowerLabel.includes('bcc')) {
+                         riskLevel = "MEDIUM"; riskClass = "risk-medium";
+                         advice = "The analysis suggests this might be Basal Cell Carcinoma. Please see a dermatologist soon for confirmation.";
+                     } else if (lowerLabel.includes('squamous cell carcinoma') || lowerLabel.includes('scc')) {
+                         riskLevel = "MEDIUM"; riskClass = "risk-medium";
+                         advice = "The analysis suggests this might be Squamous Cell Carcinoma. Please see a dermatologist soon for confirmation.";
+                     } else if (lowerLabel.includes('actinic keratosis') || lowerLabel.includes('akiec')) {
+                         riskLevel = "LOW"; riskClass = "risk-low";
+                         advice = "This might be Actinic Keratosis (pre-cancerous). It's best to have a dermatologist check it.";
+                     } else if (lowerLabel.includes('benign keratosis') || lowerLabel.includes('bkl')) {
+                         riskLevel = "LOW"; riskClass = "risk-low";
+                         advice = `The analysis suggests this is likely a harmless ${label}. See a dermatologist if it changes or concerns you.`;
+                     } else if (lowerLabel.includes('dermatofibroma') || lowerLabel.includes('df')) {
+                         riskLevel = "LOW"; riskClass = "risk-low";
+                         advice = `Features consistent with a harmless ${label}. See a dermatologist if concerned.`;
+                     } else if (lowerLabel.includes('melanocytic nevi') || lowerLabel.includes('nevus') || lowerLabel.includes('nv') || lowerLabel.includes('mole')) {
+                          riskLevel = "LOW"; riskClass = "risk-low";
+                          advice = "This looks like a common mole (Nevus). Keep an eye on it for any changes (size, shape, color) and see a dermatologist if you're worried.";
+                     } else if (lowerLabel.includes('vascular lesion') || lowerLabel.includes('vasc')) {
+                         riskLevel = "LOW"; riskClass = "risk-low";
+                         advice = `Features suggest a harmless ${label}. See a dermatologist if concerned.`;
+                     }
+                      // Add more 'else if' blocks here if the model returns other specific labels you want to handle.
+
+                     // --- Update UI ---
+                     resultValueEl.textContent = label;
+                     confidenceValueEl.textContent = `${(score * 100).toFixed(2)}%`;
+                     riskLevelEl.textContent = riskLevel;
+                     riskLevelEl.className = `result-value ${riskClass}`; // Apply color class
+                     // AI Certainty field removed
+                     analysisTimeEl.innerText = new Date().toLocaleTimeString();
+                     adviceTextEl.innerHTML = advice; // Use simplified advice
+
+                     resultBox.classList.add('show'); // Show results
+                 } else {
+                     // Handle cases where response is not the expected array or is empty
+                     console.error("Unexpected API response format:", data);
+                     throw new Error("Received unexpected or empty data format from API.");
+                 }
+                 finalizeAnalysisUI(); // Hide spinner, enable button
           })
-          .catch(error => { /* ... Error handling ... */
+          .catch(error => { // Catch fetch errors or errors thrown from .then blocks
              console.error('Analysis Process Error:', error);
              alert(`Analysis Failed: ${error.message}\n(Check browser console for technical details)`);
-             resetAnalysisUI();
+             resetAnalysisUI(); // Reset button, hide spinner
           });
         }
 
@@ -224,32 +268,27 @@
         function resetAnalysisUI() { analyzeBtn.disabled = false; spinner.style.display = 'none'; btnText.classList.remove('hide'); }
         function clearResultFields() {
             resultValueEl.textContent = ''; confidenceValueEl.textContent = ''; riskLevelEl.textContent = '';
-            aiCertaintyEl.textContent = ''; analysisTimeEl.textContent = ''; adviceTextEl.innerHTML = '';
+            // AI Certainty element removed
+            analysisTimeEl.textContent = ''; adviceTextEl.innerHTML = '';
             riskLevelEl.className = 'result-value';
         }
 
-        // --- Function to add dynamic footer ---
+        // Function to add dynamic footer
         function addSuffixInfo() {
-            // Character codes for "Created by BSM"
-            const codes = [67, 114, 101, 97, 116, 101, 100, 32, 98, 121, 32, 66, 83, 77]; // <-- UPDATED CODES
+            const codes = [67, 114, 101, 97, 116, 101, 100, 32, 98, 121, 32, 66, 83, 77]; // "Created by BSM"
             let decodedText = "";
-            for (let i = 0; i < codes.length; i++) {
-                decodedText += String.fromCharCode(codes[i]);
-            }
-
+            for (let i = 0; i < codes.length; i++) { decodedText += String.fromCharCode(codes[i]); }
             const footerEl = document.createElement('footer');
             footerEl.classList.add('page-footer');
-            footerEl.textContent = decodedText; // Set the decoded text
-
+            footerEl.textContent = decodedText;
             document.body.appendChild(footerEl);
         }
-        // --- END Footer Function ---
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             resultBox.classList.remove('show');
             clearResultFields();
-            addSuffixInfo(); // <-- Add the footer when page loads
+            addSuffixInfo();
         });
     </script>
 
